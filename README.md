@@ -17,7 +17,7 @@ This project is licensed under the MIT License.
 
 ## 🙌 Contributing
 
-I am **NOT** a coder. Much of thie code posted here could likely use optimization. I don't know what a "pull request" is, and I likely cannot answer any code-related questions. Contributions to improve and optimize the code here is welcome and appreciated, but again, I'm not a coder and don't understand how GitHub actually works.
+I am **NOT** a coder. Much of the code posted here could likely use optimization. I don't know what a "pull request" is, and I likely cannot answer any code-related questions. Contributions to improve and optimize the code here is welcome and appreciated, but again, I'm not a coder and don't understand how GitHub actually works.
 
 ---
 
