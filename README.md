@@ -22,6 +22,9 @@ It also uses different colors to denote entity states for water use, EV charging
 **Mobile**
 ![image](https://github.com/user-attachments/assets/94f9a0ff-d270-40d3-a2da-c4237dab5fc0)
 
+**Edit Mode**
+![image](https://github.com/user-attachments/assets/383cab90-cd52-40a2-8072-95ecb9244b9d)
+
 
 ## 📄 License
 
