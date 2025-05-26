@@ -1,0 +1,1384 @@
+title: Shady Birch Home Assistant
+type: sections
+icon: mdi:tablet-dashboard
+cards: []
+layout: {}
+sections:
+  - type: grid
+    cards:
+      - type: markdown
+        content: "## —— System & Climate ——"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none;
+              font-size: 12pt;
+              font-weight: 700;
+              font-family: Avenir;
+              padding: 0px;
+              margin-top: -10px;
+              margin-bottom: -5px;
+              border: none;
+              text-align:center;
+              color: #705033;
+            }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Home
+            secondary: ""
+            icon: mdi:home
+            icon_color: >-
+              {% set sensor_value =
+              states('sensor.flume_sensor_shady_birch_current') | float(0) %}
+
+              {% if sensor_value > 0.01 %}
+                #0000ff
+              {% elif sensor_value <= 0.01 %}
+                #00cc00
+              {% endif %}
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/home2
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            badge_icon: ""
+            badge_color: ""
+            layout: vertical
+          - type: custom:mushroom-template-card
+            primary: Security
+            secondary: ""
+            icon: mdi:security
+            icon_color: >-
+              {% set lock_1 = is_state('lock.front_door_lock', 'locked') %} {%
+              set lock_2 = is_state('lock.kitchen_door_lock', 'locked') %} {%
+              set lock_3 = is_state('lock.front_door_lock', 'locked') %} {% if
+              lock_1 and lock_2 and lock_3 %}
+                #00cc00
+              {% else %}
+                #ffbf00
+              {% endif %}
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/security2
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: more-info
+            layout: vertical
+            badge_icon: >-
+              {% set lock_1 = is_state('lock.front_door_lock', 'unlocked') %} {%
+              set lock_2 = is_state('lock.kitchen_door_lock', 'unlocked') %} {%
+              set lock_3 = is_state('lock.front_door_lock', 'unlocked') %} {% if
+              lock_1 or lock_2 or lock_3 %}
+                 mdi:lock-open-alert
+              {% else %}
+
+              {% endif %}
+            badge_color: >-
+              {% set lock_1 = is_state('lock.front_door_lock', 'unlocked') %} {%
+              set lock_2 = is_state('lock.kitchen_door_lock', 'unlocked') %} {%
+              set lock_3 = is_state('lock.front_door_lock', 'unlocked') %} {% if
+              lock_1 or lock_2 or lock_3 %}
+                 #ff0000
+              {% else %}
+
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Network
+            secondary: ""
+            icon: >-
+              {% if is_state('binary_sensor.er605_port_1_internet_link', 'off')
+              %}
+                mdi:lan-disconnect
+              {% elif is_state('sensor.holonet_wap_device_status', 'connected')
+              and
+                      is_state('sensor.millennium_falcon_device_status', 'connected') and
+                      is_state('sensor.razor_crest_device_status', 'connected') %}
+                mdi:lan
+              {% else %}
+                mdi:lan-pending
+              {% endif %}
+            badge_color: >-
+              {% if is_state('update.home_assistant_operating_system_update',
+              'on')
+
+              or      is_state('update.home_assistant_core_update', 'on') %}
+                 #ffbf00
+              {% endif %}
+            icon_color: >-
+              {% if is_state('binary_sensor.er605_port_1_internet_link', 'off')
+              %}
+                #ff0000
+              {% elif is_state('sensor.holonet_wap_device_status', 'connected')
+              and
+                      is_state('sensor.millennium_falcon_device_status', 'connected') and
+                      is_state('sensor.razor_crest_device_status', 'connected') %}
+                #00cc00
+              {% else %}
+                #ffbf00
+              {% endif %}
+            layout: vertical
+            grid_options:
+              columns: 3
+              rows: 2
+            badge_icon: >-
+              {% if is_state('update.home_assistant_operating_system_update',
+              'on') or 
+                    is_state('update.home_assistant_core_update', 'on') %}
+                mdi:package-up
+              {% endif %}
+            entity: binary_sensor.er605_port_1_online_detection
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/network2
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+      - type: custom:clock-weather-card
+        entity: weather.my_ecobee
+        sun_entity: sun.sun
+        weather_icon_type: line
+        animated_icon: true
+        forecast_rows: 5
+        locale: en-US
+        time_pattern: HH:mm
+        time_format: 12
+        date_pattern: cccc, d.MM.yy
+        hide_today_section: false
+        hide_forecast_section: false
+        show_humidity: true
+        hide_clock: true
+        hide_date: true
+        hourly_forecast: false
+        use_browser_time: false
+        time_zone: null
+        show_decimal: true
+        apparent_sensor: sensor.real_feel_temperature
+        aqi_sensor: sensor.air_quality_index
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 768px)"
+      - type: custom:mushroom-climate-card
+        entity: climate.my_ecobee
+        show_temperature_control: true
+        hvac_modes:
+          - auto
+          - "off"
+          - heat_cool
+          - heat
+          - cool
+          - fan_only
+        grid_options:
+          columns: 12
+          rows: 2
+        fill_container: true
+        name: "Thermostat "
+        primary_info: state
+        secondary_info: none
+        layout: vertical
+        card_mod:
+          style:
+            mushroom-state-info$: |
+              .container {
+              --card-secondary-font-size: 16px;
+              --card-primary-font-size: 18px;
+              margin-bottom: -20px;
+              margin-top: 10px;
+              }
+            .: |
+              ha-state-icon {
+              --icon-symbol-size: 50px;
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 768px)"
+      - type: custom:mushroom-climate-card
+        entity: climate.my_ecobee
+        show_temperature_control: true
+        hvac_modes:
+          - auto
+          - "off"
+          - heat_cool
+          - fan_only
+        grid_options:
+          columns: 12
+          rows: 2
+        fill_container: false
+        name: "Thermostat "
+        primary_info: name
+        secondary_info: state
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 0px) and (max-width: 767px)"
+        collapsible_controls: false
+        card_mod:
+          style:
+            mushroom-state-info$: |
+              .container {
+              --card-secondary-font-size: 14px;
+              --card-primary-font-size: 14px;
+              margin-left: 10px;
+              }
+            .: |
+              ha-state-icon {
+              --icon-symbol-size: 45px;
+  - type: grid
+    cards:
+      - type: markdown
+        content: "## ——— Downstairs ———"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none;
+              font-size: 12pt;
+              font-weight: 700;
+              font-family: Avenir;
+              padding: 0px;
+              margin-top: -10px;
+              margin-bottom: -5px;
+              border: none;
+              text-align: center;
+              color: #705033;
+            }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Foyer
+            secondary: ""
+            icon: mdi:coat-rack
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/foyer2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.foyer_chandelier', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.foyer_chandelier
+          - type: custom:mushroom-template-card
+            primary: Office
+            secondary: ""
+            icon: mdi:monitor
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/office2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.sonoff_100170fd1f_1', 'on') %}
+                #ffba77
+              {% elif is_state('fan.sonoff_100170fd1f', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.sonoff_100170fd1f_1
+            badge_icon: |-
+              {% if is_state('fan.sonoff_100170fd1f', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.sonoff_100170fd1f', 'on') %}
+              #00cc00
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Dining Room
+            secondary: ""
+            icon: phu:rooms-dining
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/dining-room2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.dining_room_chandelier', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.dining_room_chandelier
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Kitchen
+            secondary: "{{states('sensor.kitchen_temperature')}}ºF"
+            icon: phu:rooms-kitchen
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/kitchen2
+            hold_action:
+              action: more-info
+            icon_color: >-
+              {% set sleep_mode =
+              is_state('switch.adaptive_lighting_sleep_mode_kitchen_ceiling',
+              'on') %}
+
+              {% set kitchen_lights_on =
+              is_state('light.kitchen_ceiling_lights', 'on') %}
+
+              {% set bar_lights_on = is_state('light.bar_lights', 'on') %}
+
+              {% set nook_lights_on =
+              is_state('light.breakfast_nook_chandelier', 'on') %}
+
+
+              {% if sleep_mode and (kitchen_lights_on or nook_lights_on) %}
+                #ff0000
+              {% elif kitchen_lights_on or bar_lights_on or nook_lights_on %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            entity: light.kitchen_all
+            double_tap_action:
+              action: toggle
+            badge_icon: |-
+              {% if is_state('fan.simpleconnect_fan_e98ac5_hunter_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.simpleconnect_fan_e98ac5_hunter_fan', 'on') %}
+              #00cc00
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Family Room
+            secondary: "{{states('sensor.my_ecobee_temperature')}}ºF"
+            icon: phu:rooms-living
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/family-room-2
+            hold_action:
+              action: more-info
+            icon_color: >+
+              {% if is_state('light.family_room_ceiling', 'on') or 
+
+              is_state('light.family_room_floods', 'on') or 
+
+              is_state('light.gallery_lights_2', 'on') or   
+              is_state('media_player.family_room_apple_tv', 'playing') or   
+              is_state('media_player.family_room_homepod', 'playing' %}
+                #ffba77
+              {% endif %}
+
+            multiline_secondary: false
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.family_room_ceiling
+            badge_color: |-
+              {% if is_state('fan.family_room_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+            badge_icon: |-
+              {% if is_state('fan.family_room_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Sun Room
+            secondary: "{{states('sensor.sun_room_door_sensor_device_temperature')}}ºF"
+            icon: mdi:billiards
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/sun-room2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.sun_room_ceiling_lights', 'on') or
+              is_state('light.sun_room_flood_lights', 'on') %}
+                #ffba77
+                {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.sun_room_ceiling_lights_2
+            badge_icon: |-
+              {% if is_state('fan.sunroom_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.sunroom_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Half Bath
+            secondary: ""
+            icon: phu:rooms-toilet
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/half-bath2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('switch.half_bath_vanity_lights', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: true
+            double_tap_action:
+              action: toggle
+            entity: switch.half_bath_vanity_lights
+          - type: custom:mushroom-template-card
+            primary: Hallway
+            secondary: ""
+            icon: mdi:image-frame
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/hallway2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('switch.hallway_lights', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: false
+            fill_container: true
+            entity: switch.hallway_lights
+            double_tap_action:
+              action: toggle
+          - type: custom:mushroom-template-card
+            primary: Laundry
+            secondary: "{{states('sensor.laundry_sensor_temp_offset')}}ºF"
+            icon: phu:rooms-laundry-room
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/laundry-room2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('switch.laundry_room_light', 'on') %}
+                #ffba77
+              {% elif is_state('input_boolean.laundry_cycle', 'on') %}
+              blue
+              {% endif %}
+            multiline_secondary: true
+            fill_container: true
+            double_tap_action:
+              action: toggle
+            entity: switch.laundry_room_light
+      - type: custom:gap-card
+        height: 5
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 768px)"
+      - type: markdown
+        content: "## ——— Upstairs ———"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none;
+              font-size: 12pt;
+              font-weight: 700;
+              font-family: Avenir;
+              padding: 0px;
+              margin-top: -10px;
+              margin-bottom: -5px;
+              border: none;
+              text-align: center;
+              color: #705033;
+            }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Rocky
+            secondary: "{{states('sensor.rocky_s_room_sensor_temp_offset')}}ºF"
+            icon: phu:rooms-bedroom
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/rocky2
+            hold_action:
+              action: more-info
+            icon_color: >-
+              {% if is_state('light.rockys_ceiling_fan_light', 'on') or
+
+              is_state('switch.usb_power_brick', 'on') or
+              is_state('switch.subwoofer_plug', 'on') or
+              is_state('media_player.rockys_room_atv', 'playing') or
+
+              is_state('light.bedside_lamp', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.rockys_ceiling_fan_light
+            badge_icon: |-
+              {% if is_state('fan.rockys_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.rockys_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Judy
+            secondary: "{{states('sensor.judy_s_room_sensor_temp_offset')}}ºF"
+            icon: phu:rooms-bedroom
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/judy2
+            hold_action:
+              action: more-info
+            icon_color: >-
+              {% if is_state('light.judys_room_lights', 'on') or
+              is_state('media_player.judys_room_2', 'playing') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.judys_room_lights
+            badge_icon: |-
+              {% if is_state('fan.judys_room_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.judys_room_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Office
+            secondary: "{{states('sensor.craft_room_temperature')}}ºF"
+            icon: phu:rooms-studio
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/judys-office
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.craft_room_main_lights', 'on') %}
+                #ffba77
+              {% elif is_state('light.craft_room_desk_lights', 'on') %}
+                #ffba77
+              {% elif is_state('fan.craft_room_ceiling_fan', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.craft_room_main_lights
+            badge_icon: |-
+              {% if is_state('fan.craft_room_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.craft_room_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Stairs
+            secondary: "{{states('sensor.stairway_sensor_offset')}}ºF"
+            icon: phu:rooms-staircase
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/stairway2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.stairway_lights', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            entity: light.stairway_lights
+            double_tap_action:
+              action: toggle
+          - type: custom:mushroom-template-card
+            primary: Guest Bath
+            secondary: "{{states('sensor.guest_bath_window_sensor_device_temperature')}}ºF"
+            icon: phu:rooms-bathroom
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/guest-bathroom2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.upstairs_bathroom_light', 'on') %}
+                amber
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            entity: light.upstairs_bathroom_light
+            double_tap_action:
+              action: toggle
+          - type: custom:mushroom-template-card
+            primary: Guest Room
+            secondary: "{{states('sensor.guest_room_temperature')}}ºF"
+            icon: phu:rooms-bedroom
+            icon_color: |-
+              {% if is_state('light.guest_room_main_lights', 'on') or
+              is_state('light.guest_room_lamp', 'on') %}
+              #ffba77
+              {% endif %}
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/guest-room2
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: toggle
+            layout: vertical
+            entity: light.guest_room_main_lights
+            badge_icon: |-
+              {% if is_state('fan.front_guest_room_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.front_guest_room_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+  - type: grid
+    cards:
+      - type: markdown
+        content: "## ——— Outside ———"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none;
+              font-size: 12pt;
+              font-weight: 700;
+              font-family: Avenir;
+              padding: 0px;
+              margin-top: -10px;
+              margin-bottom: -5px;
+              border: none;
+              text-align: center;
+              color: #705033;
+            }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Porch
+            secondary: ""
+            icon: |-
+              {% if is_state('binary_sensor.front_door_sensor_contact', 'on') %}
+                 mdi:door-open
+              {% else %}
+                 phu:rooms-front-door
+              {% endif %}
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/porch2
+            hold_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/porch2
+            icon_color: >-
+              {% if is_state('light.porch_bulb', 'on') %}
+                #ffba77
+              {% elif is_state('binary_sensor.front_door_sensor_contact', 'on')
+              %}
+                #ffbf00
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            entity: light.porch_bulb
+            double_tap_action:
+              action: more-info
+            badge_icon: |-
+              {% if is_state('fan.deck_outdoor_plug_switch_1', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.deck_outdoor_plug_switch_1', 'on') %}
+              #00cc00
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Deck
+            secondary: ""
+            icon: phu:rooms-outdoor-social-time
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/deck2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.deck_light', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            entity: light.deck_light
+            double_tap_action:
+              action: more-info
+          - type: custom:mushroom-template-card
+            primary: Backyard
+            secondary: ""
+            icon: phu:rooms-outdoor
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/backyard2
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('light.outside_lights', 'on') %}
+                #ffba77
+              {% else %}
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.outside_lights
+            badge_icon: |-
+              {% if is_state('switch.pond_plug_switch_0', 'on') %}
+              mdi:pump
+              {% endif %}
+            badge_color: |-
+              {% if is_state('switch.pond_plug_switch_0', 'on') %}
+              #00cc00
+              {% endif %}
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Garage
+            secondary: "{{states('sensor.garage_sensor_temp_offset')}}ºF"
+            icon: |-
+              {% if is_state('cover.ratgdov25i_0cceb5_door', 'open') %}
+                 mdi:garage-open-variant
+              {% else %}
+                 mdi:garage-variant
+              {% endif %}
+            icon_color: |-
+              {% if is_state('switch.garage_lights', 'on') or
+                    is_state('switch.work_light_plug', 'on') or
+                    is_state('light.ratgdov25i_0cceb5_light', 'on') or
+                    is_state('cover.ratgdov25i_0cceb5_door', 'open') %}
+                #ffba77
+              {% elif is_state('input_boolean.evse_charging', 'on') or
+              is_state('switch.battery_charger_plug',
+              'on') %}
+                blue
+              {% endif %}
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/garage2
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: toggle
+            entity: switch.garage_lights
+            fill_container: true
+            badge_icon: |-
+              {% if is_state('cover.ratgdov25i_0cceb5_door', 'open') %}
+                 mdi:garage-open-variant
+              {% else %}
+              {% endif %}
+            badge_color: |-
+              {% if is_state('cover.ratgdov25i_0cceb5_door', 'open') %}
+              #ff0000
+              {% else %}
+              {% endif %}
+          - type: custom:mushroom-template-card
+            primary: Driveway
+            secondary: ""
+            icon: phu:rooms-driveway
+            icon_color: |-
+              {% if is_state('light.driveway_lights', 'on') %}
+                #ffba77
+              {% elif is_state('light.holiday_lights', 'on') %}
+                #ffba77
+              {% endif %}
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/driveway2
+            layout: vertical
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: more-info
+            entity: light.driveway_lights
+            fill_container: true
+      - event_grouping: true
+        drop_todayevents_from: "10:00:00"
+        next_days: 7
+        pattern:
+          - icon: mdi:flower
+            color: lime
+            type: organic
+          - icon: mdi:newspaper
+            color: blue
+            type: paper
+          - icon: mdi:recycle-variant
+            color: green
+            type: recycle
+            pattern: recycle
+          - icon: mdi:trash-can-outline
+            color: grey
+            type: waste
+            pattern: Trash
+          - icon: mdi:dump-truck
+            color: purple
+            type: others
+        day_style: counter
+        alignment_style: center
+        color_mode: icon
+        items_per_row: 2
+        refresh_rate: 600
+        with_label: true
+        type: custom:trash-card
+        entities:
+          - calendar.recycling_and_waste_pickup
+        only_all_day_events: true
+        use_summary: false
+        full_size: true
+        fill_container: true
+        grid_options:
+          columns: 12
+          rows: 1
+      - type: custom:gap-card
+        height: 50
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 768px)"
+      - type: markdown
+        content: "## ——— Deanna ———"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none;
+              font-size: 12pt;
+              font-weight: 700;
+              font-family: Avenir;
+              padding: 0px;
+              margin-top: -10px;
+              margin-bottom: -5px;
+              border: none;
+              text-align: center;
+              color: #705033;
+            }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Stairway
+            secondary: "{{states('sensor.bonus_stairway_sensor_offset')}}ºF"
+            icon: mdi:stairs
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/bonus-stairway2
+            hold_action:
+              action: more-info
+            icon_color: |
+              {% if is_state('light.bonus_stairway_lights', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: toggle
+            entity: light.bonus_stairway_lights
+          - type: custom:mushroom-template-card
+            primary: Deanna
+            secondary: "{{states('sensor.deannas_room_combo_sensor_temperature')}}ºF"
+            icon: phu:rooms-bedroom
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/deannas-room
+            hold_action:
+              action: more-info
+            icon_color: >-
+              {% if is_state('light.table_lamps', 'on') or
+              is_state('light.deannas_room_desk_light', 'on') or
+
+              is_state('light.deannas_room_dormer_lights', 'on') or
+              is_state('light.deannas_room_dresser_light', 'on') or
+              is_state('light.deannas_room_main_lights', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: more-info
+            badge_icon: |-
+              {% if is_state('fan.deannas_room_ceiling_fan', 'on') %}
+              mdi:fan
+              {% endif %}
+            badge_color: |-
+              {% if is_state('fan.deannas_room_ceiling_fan', 'on') %}
+              #00cc00
+              {% endif %}
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Bathroom
+            secondary: "{{states('sensor.bonus_bath_combo_sensor_temperature')}}ºF"
+            icon: phu:rooms-bathroom
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-tablet/bonus-bath
+            icon_color: |-
+              {% if is_state('light.bonus_bath_light', 'on') %}
+                amber
+              {% endif %}
+            multiline_secondary: true
+            fill_container: true
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: more-info
+            entity: light.bonus_bath_light
+          - type: custom:mushroom-template-card
+            primary: Closet
+            secondary: "{{states('sensor.deanna_s_closet_sensor_temp_offset')}}ºF"
+            icon: phu:rooms-closet
+            layout: vertical
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            icon_color: |-
+              {% if is_state('switch.deannas_closet_light', 'on') %}
+                #ffba77
+              {% endif %}
+            multiline_secondary: true
+            fill_container: false
+            double_tap_action:
+              action: more-info
+            entity: switch.deannas_closet_light
+max_columns: 3
+dense_section_placement: true
+background:
+  opacity: 33
+  alignment: center
+  size: cover
+  repeat: repeat
+  attachment: fixed
+badges:
+  - type: custom:mushroom-template-badge
+    content: "{{states('sensor.my_ecobee_humidity')}}%"
+    icon: mdi:water-percent
+    color: >
+      {% set level = states('sensor.my_ecobee_humidity')|int %} {% if level |
+      int > 40 %} green {% elif level | int > 25 %} amber {% else %} red {%
+      endif %}
+    entity: sensor.my_ecobee_humidity
+    label: Home Humidity
+    visibility:
+      - condition: numeric_state
+        entity: sensor.my_ecobee_humidity
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: lock.front_door_lock
+    name: Front Door
+    visibility:
+      - condition: state
+        entity: lock.front_door_lock
+        state: unlocked
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    name: Kitchen Door
+    visibility:
+      - condition: state
+        entity: lock.kitchen_door_lock
+        state: unlocked
+    entity: lock.kitchen_door_lock
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: lock.sun_room_door_lock
+    name: Sun Room Door
+    visibility:
+      - condition: state
+        entity: lock.sun_room_door_lock
+        state: unlocked
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: cover.ratgdov25i_0cceb5_door
+    name: Garage Door
+    visibility:
+      - condition: state
+        entity: cover.ratgdov25i_0cceb5_door
+        state: open
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.er605_port_1_internet_link
+    name: Internet
+    visibility:
+      - condition: state
+        entity: binary_sensor.er605_port_1_internet_link
+        state: "off"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.dining_room_window_1_contact
+    name: Window 1
+    visibility:
+      - condition: state
+        entity: binary_sensor.dining_room_window_1_contact
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.dining_room_window_2_contact
+    name: Window 2
+    visibility:
+      - condition: state
+        entity: binary_sensor.dining_room_window_2_contact
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.guest_bath_window_sensor_contact
+    name: Guest Bath Window
+    visibility:
+      - condition: state
+        entity: binary_sensor.guest_bath_window_sensor_contact
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Half Bath Leak Sensor
+    visibility:
+      - condition: state
+        entity: binary_sensor.half_bath_leak_sensor_water_leak
+        state: "on"
+    entity: binary_sensor.half_bath_leak_sensor_water_leak
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: binary_sensor.guest_bath_leak_sensor_water_leak
+    color: ""
+    name: Guest Bath Leak Sensor
+    visibility:
+      - condition: state
+        entity: binary_sensor.half_bath_leak_sensor_water_leak
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: binary_sensor.kitchen_leak_sensor_water_leak
+    color: ""
+    name: Kitchen Leak Sensor
+    visibility:
+      - condition: state
+        entity: binary_sensor.half_bath_leak_sensor_water_leak
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.zcombo_smoke_co_alarm_1_smoke_detected
+    name: Bonus Stairway Smoke Detector
+    visibility:
+      - condition: state
+        entity: binary_sensor.zcombo_smoke_co_alarm_1_smoke_detected
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.zcombo_smoke_co_alarm_2_smoke_detected
+    name: Stairway Smoke Detector
+    visibility:
+      - condition: state
+        entity: binary_sensor.zcombo_smoke_co_alarm_2_smoke_detected
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    color: ""
+    entity: binary_sensor.zcombo_smoke_co_alarm_2_carbon_monoxide_detected
+    name: Stairway Carbon Monoxide Detector
+    visibility:
+      - condition: state
+        entity: binary_sensor.zcombo_smoke_co_alarm_2_carbon_monoxide_detected
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: update.pi_hole_core_update_available
+    name: Pi-Hole Core
+    visibility:
+      - condition: state
+        entity: update.pi_hole_core_update_available
+        state: "on"
+      - condition: user
+        users:
+          - f8f9a03c822b4ebb8c388c437bab0262
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: update.home_assistant_operating_system_update
+    name: Home Assistant OS
+    visibility:
+      - condition: screen
+        media_query: "(min-width: 768px)"
+      - condition: state
+        entity: update.home_assistant_operating_system_update
+        state: "on"
+      - condition: user
+        users:
+          - f8f9a03c822b4ebb8c388c437bab0262
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.fox_running
+    visibility:
+      - condition: state
+        entity: sensor.fox_running
+        state: unknown
+      - condition: user
+        users:
+          - f8f9a03c822b4ebb8c388c437bab0262
+    name: Fox Status
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.shadybirch_volume_1_status
+    name: HoloNet NAS
+    visibility:
+      - condition: state
+        entity: sensor.shadybirch_volume_1_status
+        state: unavailable
+      - condition: user
+        users:
+          - f8f9a03c822b4ebb8c388c437bab0262
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.shady_birch_nvr_hdd_0_storage
+    name: Shady Birch NVR
+    visibility:
+      - condition: state
+        entity: sensor.shady_birch_nvr_hdd_0_storage
+        state: unavailable
+      - condition: user
+        users:
+          - f8f9a03c822b4ebb8c388c437bab0262
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: switch.shady_birch_7_2kw
+    name: EVSE
+    visibility:
+      - condition: state
+        entity: switch.shady_birch_7_2kw
+        state_not: "on"
+  - type: custom:mushroom-template-badge
+    content: |-
+      {% set status = { 
+          'connected': 'Connected',
+          'disconnected': 'Disconnected',
+          'pending': 'Pending',
+          'heartbeat_missed': 'Heartbeat Missed',
+          'isolated': 'Isolated'
+        } %}
+        {{ status.get( states('sensor.razor_crest_device_status') ) }}
+    icon: |-
+      {% if is_state('sensor.razor_crest_device_status', 'connected') %}
+      mdi:wifi
+      {% else %}
+      mdi:wifi-alert
+      {% endif %}
+    color: |
+      {% if is_state('sensor.razor_crest_device_status', 'connected') %}
+      #00cc00
+      {% else %}
+      #ff0000
+      {% endif %}
+    entity: sensor.razor_crest_device_status
+    label: Razor Crest - Family Room
+    visibility:
+      - condition: state
+        entity: sensor.razor_crest_device_status
+        state_not: connected
+  - type: custom:mushroom-template-badge
+    content: |-
+      {% set status = { 
+          'connected': 'Connected',
+          'disconnected': 'Disconnected',
+          'pending': 'Pending',
+          'heartbeat_missed': 'Heartbeat Missed',
+          'isolated': 'Isolated'
+        } %}
+        {{ status.get( states('sensor.millennium_falcon_device_status') ) }}
+    icon: |-
+      {% if is_state('sensor.millennium_falcon_device_status', 'connected') %}
+      mdi:wifi
+      {% else %}
+      mdi:wifi-alert
+      {% endif %}
+    color: |
+      {% if is_state('sensor.millennium_falcon_device_status', 'connected') %}
+      #00cc00
+      {% else %}
+      #ff0000
+      {% endif %}
+    entity: sensor.razor_crest_device_status
+    label: Millennium Falcon - Garage
+    visibility:
+      - condition: state
+        entity: sensor.millennium_falcon_device_status
+        state_not: connected
+  - type: custom:mushroom-template-badge
+    content: |-
+      {% set status = { 
+          'connected': 'Connected',
+          'disconnected': 'Disconnected',
+          'pending': 'Pending',
+          'heartbeat_missed': 'Heartbeat Missed',
+          'isolated': 'Isolated'
+        } %}
+        {{ status.get( states('sensor.holonet_wap_device_status') ) }}
+    icon: |-
+      {% if is_state('sensor.holonet_wap_device_status', 'connected') %}
+      mdi:wifi
+      {% else %}
+      mdi:wifi-alert
+      {% endif %}
+    color: |
+      {% if is_state('sensor.holonet_wap_device_status', 'connected') %}
+      #00cc00
+      {% else %}
+      #ff0000
+      {% endif %}
+    entity: sensor.razor_crest_device_status
+    label: Ghost - Stairway
+    visibility:
+      - condition: state
+        entity: sensor.holonet_wap_device_status
+        state_not: connected
+  - type: custom:mushroom-template-badge
+    content: |-
+      {% set status = { 
+          'on': 'Detected',
+          'off': 'Not detected',
+        } %}
+        {{ status.get( states('binary_sensor.flume_sensor_shady_birch_leak_detected') ) }}
+    icon: mdi:pipe-leak
+    color: >
+      {% if is_state('binary_sensor.flume_sensor_shady_birch_leak_detected',
+      'off') %}
+
+      #00cc00
+
+      {% else %}
+
+      #ff0000
+
+      {% endif %}
+    entity: binary_sensor.flume_sensor_shady_birch_leak_detected
+    label: Flume Water Leak Sensor
+    visibility:
+      - condition: state
+        entity: binary_sensor.flume_sensor_shady_birch_leak_detected
+        state_not: "off"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: update.home_assistant_core_update
+    name: Home Assistant Core
+    visibility:
+      - condition: state
+        entity: update.home_assistant_core_update
+        state: "on"
+      - condition: user
+        users:
+          - f8f9a03c822b4ebb8c388c437bab0262
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: update.holonet_wap_firmware
+    name: Ghost Firmware Update
+    visibility:
+      - condition: state
+        entity: update.holonet_wap_firmware
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: update.razor_crest_firmware
+    name: Razor Crest Firmware Update
+    visibility:
+      - condition: state
+        entity: update.razor_crest_firmware
+        state: "on"
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: update.millennium_falcon_firmware
+    name: Millennium Falcon Firmware Update
+    visibility:
+      - condition: state
+        entity: update.millennium_falcon_firmware
+        state: "on"
+header:
+  layout: center
+  badges_position: bottom
+  badges_wrap: scroll
