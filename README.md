@@ -16,6 +16,7 @@ This is my personal custom dashboard for Home Assistant used in my home.
 ![image](https://github.com/user-attachments/assets/71105c0f-740d-461e-8a69-be2ac47432ef)
 
 **Mobile**
+![image](https://github.com/user-attachments/assets/94f9a0ff-d270-40d3-a2da-c4237dab5fc0)
 
 
 ## 📄 License
