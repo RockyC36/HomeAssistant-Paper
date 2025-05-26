@@ -8,6 +8,10 @@ This is my personal custom dashboard for Home Assistant used in my home.
 - 🔔 Custom alerts and automations
 - 📱 Responsive mobile layout
 
+This dashboard uses hidden entity badges that only appear on error, fault, or update conditions. (see the photo) 
+
+It also uses different colors to denote entity states for water use, EV charging, and my pond pump. 
+
 ## 📷 Screenshots
 **Day Mode**
 ![image](https://github.com/user-attachments/assets/05091f19-fc3e-4365-b182-264579570136)
