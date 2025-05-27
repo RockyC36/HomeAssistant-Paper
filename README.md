@@ -22,7 +22,8 @@ It also uses different colors to denote entity states for water use, EV charging
 
 ## 📷 Screenshots
 **Day Mode**
-![image](https://github.com/user-attachments/assets/05091f19-fc3e-4365-b182-264579570136)
+![image](https://github.com/user-attachments/assets/03dceff4-1b40-4546-bdb1-140d005e16c4)
+
 
 **Night Mode**
 ![image](https://github.com/user-attachments/assets/71105c0f-740d-461e-8a69-be2ac47432ef)
@@ -36,7 +37,8 @@ It also uses different colors to denote entity states for water use, EV charging
 ![image](https://github.com/user-attachments/assets/94f9a0ff-d270-40d3-a2da-c4237dab5fc0)
 
 **Edit Mode**
-![image](https://github.com/user-attachments/assets/383cab90-cd52-40a2-8072-95ecb9244b9d)
+![image](https://github.com/user-attachments/assets/0728c2b0-415f-4af2-b570-bd41a45acee8)
+
 
 ## Wallpapers
 This theme uses two different paper texture images for the wallpaper. Free paper texture images are available from a number of online sources. 
