@@ -32,6 +32,8 @@ It also uses different colors to denote entity states for water use, EV charging
 **Edit Mode**
 ![image](https://github.com/user-attachments/assets/383cab90-cd52-40a2-8072-95ecb9244b9d)
 
+## Wallpapers
+This theme uses two different paper texture images for the wallpaper. Free paper texture images are available from a number of online sources. 
 
 ## 📄 License
 
