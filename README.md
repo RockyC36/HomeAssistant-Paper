@@ -26,12 +26,7 @@ It also uses different colors to denote entity states for water use, EV charging
 
 
 **Night Mode**
-![image](https://github.com/user-attachments/assets/71105c0f-740d-461e-8a69-be2ac47432ef)
-
-![image](https://github.com/user-attachments/assets/f95bc213-8a24-4ca8-9a73-80c9aa1cfb2f)
-
-![image](https://github.com/user-attachments/assets/e7cb47b1-a10b-4e3f-b37d-8f26c34ec50f)
-
+![image](https://github.com/user-attachments/assets/38fa0fc0-2f96-4997-8449-ad2cf7848321)
 
 **Mobile**
 ![image](https://github.com/user-attachments/assets/94f9a0ff-d270-40d3-a2da-c4237dab5fc0)
