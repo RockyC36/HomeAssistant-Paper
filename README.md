@@ -16,6 +16,7 @@ It also uses different colors to denote entity states for water use, EV charging
 
 ## Add-Ons This Dashboard Uses
 - [Mushroom Cards](https://github.com/piitaya/lovelace-mushroom)
+- [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 
 ## 📷 Screenshots
