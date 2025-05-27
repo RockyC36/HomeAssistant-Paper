@@ -14,6 +14,10 @@ This dashboard uses hidden entity badges that only appear on error, fault, or up
 
 It also uses different colors to denote entity states for water use, EV charging, and my pond pump. 
 
+## Add-Ons This Dashboard Uses
+- [Mushroom Cards](https://github.com/piitaya/lovelace-mushroom)
+- [Clock Weather Card](https://github.com/pkissling/clock-weather-card]
+
 ## 📷 Screenshots
 **Day Mode**
 ![image](https://github.com/user-attachments/assets/05091f19-fc3e-4365-b182-264579570136)
