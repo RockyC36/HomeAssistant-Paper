@@ -2,6 +2,8 @@
 
 This is my personal custom dashboard for Home Assistant used in my home.
 
+Posted here both as a backup and for others to use.  
+
 ## ✨ Features
 
 - 📊 Realtime status of devices
