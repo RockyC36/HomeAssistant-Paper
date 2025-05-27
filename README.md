@@ -18,6 +18,7 @@ It also uses different colors to denote entity states for water use, EV charging
 - [Mushroom Cards](https://github.com/piitaya/lovelace-mushroom)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
+- [Trash Card](https://github.com/idaho/hassio-trash-card)
 
 ## 📷 Screenshots
 **Day Mode**
