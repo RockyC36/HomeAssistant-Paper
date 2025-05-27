@@ -2,7 +2,7 @@
 
 This is my personal custom dashboard for Home Assistant used in my home.
 
-Posted here both as a backup and for others to use.  
+Posted here both as a backup and for others to use.  I am **not** a coder or designer, just a Linux hobbyist who loves Home Assistant.
 
 ## ✨ Features
 
