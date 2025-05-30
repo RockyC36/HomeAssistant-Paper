@@ -367,17 +367,22 @@ sections:
               navigation_path: /dashboard-tablet/family-room-2
             hold_action:
               action: more-info
-            icon_color: >+
-              {% if is_state('light.family_room_ceiling', 'on') or 
+            icon_color: |
+              {% set active = [
+                'light.family_room_ceiling',
+                'light.family_room_floods',
+                'light.gallery_lights_2',
+                'media_player.family_room_apple_tv',
+                'media_player.family_room_homepod',
+                'media_player.marantz_nr1506',
+                'switch.family_room_sub_plug'
+              ] %}
 
-              is_state('light.family_room_floods', 'on') or 
-
-              is_state('light.gallery_lights_2', 'on') or   
-              is_state('media_player.family_room_apple_tv', 'playing') or   
-              is_state('media_player.family_room_homepod', 'playing' %}
+              {% if active | select('is_state', 'on') | list | count > 0 or
+                    active[3] | is_state('playing') or
+                    active[4] | is_state('playing') %}
                 #ffba77
               {% endif %}
-
             multiline_secondary: false
             fill_container: false
             double_tap_action:
@@ -513,14 +518,14 @@ sections:
               navigation_path: /dashboard-tablet/rocky2
             hold_action:
               action: more-info
-            icon_color: >-
-              {% if is_state('light.rockys_ceiling_fan_light', 'on') or
-
-              is_state('switch.usb_power_brick', 'on') or
-              is_state('switch.subwoofer_plug', 'on') or
-              is_state('media_player.rockys_room_atv', 'playing') or
-
-              is_state('light.bedside_lamp', 'on') %}
+            icon_color: |-
+              {% if [
+                states('light.rockys_ceiling_fan_light'),
+                states('switch.usb_power_brick'),
+                states('switch.subwoofer_plug'),
+                states('media_player.rockys_room_atv'),
+                states('light.bedside_lamp')
+              ] | select('in', ['on', 'playing']) | list | count > 0 %}
                 #ffba77
               {% endif %}
             multiline_secondary: true
@@ -915,13 +920,15 @@ sections:
               navigation_path: /dashboard-tablet/deannas-room
             hold_action:
               action: more-info
-            icon_color: >-
-              {% if is_state('light.table_lamps', 'on') or
-              is_state('light.deannas_room_desk_light', 'on') or
-
-              is_state('light.deannas_room_dormer_lights', 'on') or
-              is_state('light.deannas_room_dresser_light', 'on') or
-              is_state('light.deannas_room_main_lights', 'on') %}
+            icon_color: |-
+              {% if [
+                states('light.table_lamps'),
+                states('light.deannas_room_desk_light'),
+                states('light.deannas_room_dormer_lights'),
+                states('light.deannas_room_dresser_light'),
+                states('light.deannas_room_main_lights'),
+                states('media_player.deannas_room')
+              ] | select('in', ['on', 'playing']) | list | count > 0 %}
                 #ffba77
               {% endif %}
             multiline_secondary: true
