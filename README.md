@@ -10,9 +10,7 @@ Posted here both as a backup and for others to use.  I am **not** a coder or des
 - 🔔 Custom alerts and automations
 - 📱 Responsive mobile layout
 
-This dashboard uses hidden entity badges that only appear on error, fault, or update conditions. (see the photo) 
-
-It also uses different colors to denote entity states for water use, EV charging, and my pond pump. 
+This dashboard uses hidden entity badges that only appear on update, info, or fault conditions - kind of like a dashboard lights on a car (see the photo). Clutter and information overload is banished while still being useful. It also uses different colors to denote update, info, error, or fault conditions in line with the badges. Entity states for water use, EV charging, my pond pump, and a few other things also use colors.
 
 ## Add-Ons This Dashboard Uses
 - [Mushroom Cards](https://github.com/piitaya/lovelace-mushroom)
