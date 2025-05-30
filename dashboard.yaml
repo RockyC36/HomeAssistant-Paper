@@ -115,7 +115,8 @@ sections:
               {% elif is_state('sensor.holonet_wap_device_status', 'connected')
               and
                       is_state('sensor.millennium_falcon_device_status', 'connected') and
-                      is_state('sensor.razor_crest_device_status', 'connected') %}
+                      is_state('sensor.razor_crest_device_status', 'connected')   and
+              is_state('sensor.family_room_ups_status', 'connected')%}
                 #00cc00
               {% else %}
                 #ffbf00
@@ -480,7 +481,7 @@ sections:
               action: toggle
             entity: switch.laundry_room_light
       - type: custom:gap-card
-        height: 5
+        height: 15
         visibility:
           - condition: screen
             media_query: "(min-width: 768px)"
@@ -840,7 +841,7 @@ sections:
             type: recycle
             pattern: recycle
           - icon: mdi:trash-can-outline
-            color: grey
+            color: deep-orange
             type: waste
             pattern: Trash
           - icon: mdi:dump-truck
@@ -863,7 +864,7 @@ sections:
           columns: 12
           rows: 1
       - type: custom:gap-card
-        height: 50
+        height: 62
         visibility:
           - condition: screen
             media_query: "(min-width: 768px)"
@@ -1378,6 +1379,341 @@ badges:
       - condition: state
         entity: update.millennium_falcon_firmware
         state: "on"
+  - type: custom:mushroom-template-badge
+    icon: mdi:truck-fast
+    entity: sensor.parcel_active_shipment
+    content: >-
+      {{ state_attr('sensor.parcel_active_shipment', 'parcels_arriving_today')
+      }} Parcels
+    color: "#00cc00"
+    label: Today's Deliveries
+    visibility:
+      - condition: state
+        entity: binary_sensor.parcels_arriving_today
+        state: "on"
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-tablet/deliveries
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.kitchen_door_lock_battery
+    name: Kitchen Door Lock
+    visibility:
+      - condition: numeric_state
+        entity: sensor.kitchen_door_lock_battery
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.front_door_lock_battery_level
+    name: Front Door Lock
+    visibility:
+      - condition: numeric_state
+        entity: sensor.front_door_lock_battery_level
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.sun_room_door_lock_battery
+    name: Sun Room Door Lock
+    visibility:
+      - condition: numeric_state
+        entity: sensor.sun_room_door_lock_battery
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Dining Room Window 1
+    visibility:
+      - condition: numeric_state
+        entity: sensor.dining_room_window_1_battery
+        below: 40
+    entity: sensor.dining_room_window_1_battery
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Dining Room Window 2
+    visibility:
+      - condition: numeric_state
+        entity: sensor.dining_room_window_2_battery
+        below: 40
+    entity: sensor.dining_room_window_2_battery
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.half_bath_aqara_sensor_battery
+    visibility:
+      - condition: numeric_state
+        entity: sensor.half_bath_aqara_sensor_battery
+        below: 40
+    name: Half Bath Motion Sensor
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.laundry_aqara_sensor_battery
+    name: Laundry Room Motion Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.laundry_aqara_sensor_battery
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.rockys_room_combo_sensor_battery
+    visibility:
+      - condition: numeric_state
+        entity: sensor.rockys_room_combo_sensor_battery
+        below: 40
+    name: Rocky’s Combo Sensor
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.judys_room_combo_sensor_battery
+    name: Judy’s Combo Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.judys_room_combo_sensor_battery
+        below: 30
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.craft_room_aqara_sensor_battery
+    name: Judy’s Office Motion Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.craft_room_aqara_sensor_battery
+        below: 30
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.stairway_aqara_motion_sensor_battery
+    name: Stairway Motion Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.stairway_aqara_motion_sensor_battery
+        below: 30
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Guest Bath Leak Sensor
+    entity: sensor.guest_bath_leak_sensor_battery_plus
+    visibility:
+      - condition: numeric_state
+        entity: binary_sensor.guest_bath_leak_sensor_battery_low
+        below: 30
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.guest_bath_window_sensor_battery
+    name: Guest Bath Window Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.guest_bath_window_sensor_battery
+        below: 30
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.bonus_stairway_motion_sensor_battery
+    visibility:
+      - condition: numeric_state
+        entity: sensor.bonus_stairway_motion_sensor_battery
+        below: 40
+    name: Bonus Stairway Motion Sensor
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.deannas_room_combo_sensor_battery
+    visibility:
+      - condition: numeric_state
+        entity: sensor.deannas_room_combo_sensor_battery
+        below: 40
+    name: Deanna’s Combo Sensor
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.bonus_bath_combo_sensor_battery
+    visibility:
+      - condition: numeric_state
+        entity: sensor.bonus_bath_combo_sensor_battery
+        below: 40
+    name: Bonus Bath Combo Sensor
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.deannas_closet_aqara_sensor_battery
+    name: Bonus Closet Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.deannas_closet_aqara_sensor_battery
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.master_bath_combo_sensor_battery
+    name: Master Bath Combo Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.master_bath_combo_sensor_battery
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Master Vanity Motion Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.master_bath_aqara_sensor_battery
+        below: 40
+    entity: sensor.master_bath_aqara_sensor_battery
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Master Toilet Motion Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.master_toilet_aqara_sensor_battery
+        below: 40
+    entity: sensor.master_toilet_aqara_sensor_battery
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Master Closet Motion Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.master_closet_aqara_sensor_battery
+        below: 40
+    entity: sensor.master_closet_aqara_sensor_battery
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: camera.e1_pro_fluent
+    name: Garage Camera
+    visibility:
+      - condition: state
+        entity: camera.e1_pro_fluent
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: camera.kitchen_fluent
+    name: Kitchen Camera
+    visibility:
+      - condition: state
+        entity: camera.kitchen_fluent
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: camera.deck_fluent
+    name: Deck Camera
+    visibility:
+      - condition: state
+        entity: camera.deck_fluent
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: camera.reolink_video_doorbell_poe_w_fluent
+    name: Doorbell Camera
+    visibility:
+      - condition: state
+        entity: camera.reolink_video_doorbell_poe_w_fluent
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: camera.camera1_fluent
+    name: Driveway Camera
+    visibility:
+      - condition: state
+        entity: camera.camera1_fluent
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.kitchen_leak_sensor_battery
+    name: Kitchen Leak Sensor
+    visibility:
+      - condition: numeric_state
+        entity: binary_sensor.kitchen_leak_sensor_battery_low
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.half_bath_leak_sensor_battery_plus
+    name: Half Bath Leak Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.half_bath_leak_sensor_battery_plus
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.guest_bath_leak_sensor_battery
+    name: Guest Bath Leak Sensor
+    visibility:
+      - condition: numeric_state
+        entity: sensor.guest_bath_leak_sensor_battery
+        below: 40
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.fox_cpu_usage
+    name: Fox Docker Host
+    visibility:
+      - condition: state
+        entity: sensor.fox_cpu_usage
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.shadybirch_cpu_utilization_total
+    name: Synology NAS
+    visibility:
+      - condition: state
+        entity: sensor.shadybirch_cpu_utilization_total
+        state: unavailable
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    name: Boost UPS Monitor
+    visibility:
+      - condition: state
+        entity: sensor.family_room_ups_status
+        state: unavailable
+    entity: sensor.family_room_ups_status
 header:
   layout: center
   badges_position: bottom
