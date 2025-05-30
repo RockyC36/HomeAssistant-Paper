@@ -17,6 +17,7 @@ This dashboard uses hidden entity badges that only appear on update, info, or fa
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Trash Card](https://github.com/idaho/hassio-trash-card)
+- [parcel-ha](https://github.com/jmdevita/parcel-ha)
 
 ## 📷 Screenshots
 **Day Mode**
@@ -30,7 +31,7 @@ This dashboard uses hidden entity badges that only appear on update, info, or fa
 ![image](https://github.com/user-attachments/assets/94f9a0ff-d270-40d3-a2da-c4237dab5fc0)
 
 **Edit Mode**
-![image](https://github.com/user-attachments/assets/0728c2b0-415f-4af2-b570-bd41a45acee8)
+![image](https://github.com/user-attachments/assets/d0d1605e-cb74-4c52-836f-5d5afe9c9782)
 
 
 ## Wallpapers
